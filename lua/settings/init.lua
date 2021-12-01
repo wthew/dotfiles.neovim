@@ -16,3 +16,6 @@ vim.cmd([[ syntax on ]])
 vim.cmd([[ set termguicolors ]])
 vim.cmd([[ colorscheme dracula ]])
 vim.cmd([[ highlight Normal guibg=none ]])
+
+vim.opt.laststatus=2
+vim.opt.showtabline=2
