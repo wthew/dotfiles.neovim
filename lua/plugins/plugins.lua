@@ -9,4 +9,5 @@ return require('packer').startup(function()
   use 'lukas-reineke/indent-blankline.nvim'
   use 'tpope/vim-surround'
   use 'windwp/nvim-autopairs'
+  use 'github/copilot.vim'
 end)
