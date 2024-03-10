@@ -11,11 +11,18 @@ vim.cmd([[ set shiftwidth=2 ]])
 vim.cmd([[ set softtabstop=2 ]])
 vim.cmd([[ set expandtab ]])
 vim.cmd([[ set guicursor= ]])
+vim.cmd([[ set guifont=Monocraft\ Nerd\ Font:h10]])
 vim.cmd([[ set cursorline ]])
 vim.cmd([[ syntax on ]])
+vim.cmd([[ set nowrap ]])
 vim.cmd([[ set termguicolors ]])
 vim.cmd([[ colorscheme dracula ]])
 vim.cmd([[ highlight Normal guibg=none ]])
+vim.cmd [[ autocmd BufWritePre * lua vim.lsp.buf.format() ]]
 
 vim.opt.laststatus=2
 vim.opt.showtabline=2
+
+vim.cmd([[ let g:neovide_transparency = 0.8 ]])
+
+require 'settings.themes'
