@@ -110,9 +110,46 @@ vim.keymap.set("n", "H", api.tree.collapse_all, opts("Collapse All"))
 -- Configuração do LSP para TypeScript
 local nvim_lsp = require('lspconfig')
 
-nvim_lsp.tsserver.setup{}
+
+local format_augroup = vim.api.nvim_create_augroup("LSPFormatting", {})
+local function on_attach(client, buffer)
+	if not client.supports_method("textDocument/formatting") then
+		return
+	end
+
+	vim.api.nvim_clear_autocmds({
+		group = format_augroup,
+		buffer = buffer,
+	})
+	vim.api.nvim_create_autocmd("BufWritePre", {
+		group = format_augroup,
+		buffer = buffer,
+		callback = function()
+			if vim.g.noformat ~= nil then
+				return
+			end
+			vim.lsp.buf.format({
+				async = false,
+				timeout_ms = 5000,
+				filter = function(c)
+					-- using goimports instead
+					if c.name == "gopls" then
+						return false
+					end
+					return true
+				end,
+			})
+		end,
+	})
+end
 
 
+-- TypeScript
+nvim_lsp.ts_ls.setup {
+  on_attach = on_attach,
+  filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
+  cmd = { "typescript-language-server", "--stdio" }
+}
 
 local has_any_words_before = function()
   if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
